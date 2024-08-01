@@ -1,0 +1,4 @@
+1. need to know the region of the resouce that you want to make for our example it is us-west-2
+2. need to know the image that you want to make use of and the ami id of that image for that we use the default amazon linux image with the ami id = ami-0427090fd1714168b
+3. you have to create a vpc (virtual private cloud[a network]) vpc-06d1b2b9c0c5e7dfc
+4. also need to create a network and and a subnet 
