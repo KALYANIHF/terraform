@@ -1,3 +1,7 @@
+variable "aws_key_pair" {
+  default = "~/aws/aws_keys/default-ec2.pem"
+}
+
 terraform {
   required_providers {
     aws = {
@@ -58,4 +62,19 @@ resource "aws_instance" "aws_ec2_instance" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   subnet_id              = "subnet-0d0decb69699d693d"
+
+  connection {
+    type = "ssh"
+    host = self.public_ip
+    user = "ec2-user"
+    private_key = file(var.aws_key_pair)
+  }
+
+  provisioner "remote-exec" {
+    inline = [ 
+        "sudo yum install httpd -y",
+        "sudo service httpd start",
+        "echo message | sudo tee /var/www/html/index.html"
+     ]
+  }
 }
